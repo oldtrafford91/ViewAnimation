@@ -14,6 +14,7 @@
 		E1528D8F1BBCD7FA00DC7557 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1528D8E1BBCD7FA00DC7557 /* Images.xcassets */; };
 		E1528D921BBCD7FA00DC7557 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1528D901BBCD7FA00DC7557 /* LaunchScreen.xib */; };
 		E1528D9E1BBCD7FB00DC7557 /* ViewAnimationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E1528D9D1BBCD7FB00DC7557 /* ViewAnimationTests.m */; };
+		E1E05C171BBF447200C31713 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = E1E05C161BBF447200C31713 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		E1528D971BBCD7FB00DC7557 /* ViewAnimationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ViewAnimationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1528D9C1BBCD7FB00DC7557 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1528D9D1BBCD7FB00DC7557 /* ViewAnimationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewAnimationTests.m; sourceTree = "<group>"; };
+		E1E05C161BBF447200C31713 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				E1528D8E1BBCD7FA00DC7557 /* Images.xcassets */,
 				E1528D901BBCD7FA00DC7557 /* LaunchScreen.xib */,
 				E1528D811BBCD7FA00DC7557 /* Supporting Files */,
+				E1E05C161BBF447200C31713 /* README.md */,
 			);
 			path = ViewAnimation;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 			files = (
 				E1528D8A1BBCD7FA00DC7557 /* ViewController.m in Sources */,
 				E1528D871BBCD7FA00DC7557 /* AppDelegate.m in Sources */,
+				E1E05C171BBF447200C31713 /* README.md in Sources */,
 				E1528D841BBCD7FA00DC7557 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,6 +420,7 @@
 				E1528DA31BBCD7FB00DC7557 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E1528DA41BBCD7FB00DC7557 /* Build configuration list for PBXNativeTarget "ViewAnimationTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +429,7 @@
 				E1528DA61BBCD7FB00DC7557 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
