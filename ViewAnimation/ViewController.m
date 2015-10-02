@@ -8,6 +8,13 @@
 
 #import "ViewController.h"
 
+void delay(double second, dispatch_block_t completion){
+  dispatch_time_t poptime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSEC_PER_SEC*second));
+  dispatch_after(poptime, dispatch_get_main_queue(), ^{
+    completion();
+  });
+}
+
 @interface ViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *heading;
@@ -27,6 +34,7 @@
   UIImageView *_status;
   UILabel *_label;
   NSArray *_message;
+  CGPoint _statusPosition;
 }
 
 #pragma mark - View Life Cycle
@@ -39,7 +47,7 @@
   self.loginButton.layer.masksToBounds = YES;
   
   _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-  _spinner.frame = CGRectMake(-20.0f, 6.0f, 20.0f, 20.0f);
+  _spinner.frame = CGRectMake(-20.0f, 16.0f, 20.0f, 20.0f);
   [_spinner startAnimating];
   _spinner.alpha = 0.0f;
   [self.loginButton addSubview:_spinner];
@@ -49,12 +57,16 @@
   _status.center = self.loginButton.center;
   [self.view addSubview:_status];
   
+  _statusPosition = _status.center;
+  
   _label = [UILabel new];
   _label.frame = CGRectMake(0.0f, 0.0f, _status.frame.size.width, _status.frame.size.height);
   _label.font = [UIFont fontWithName:@"HelveticaNeue" size:18];
   _label.textColor = [UIColor colorWithRed:0.89f green:0.38f blue:0.0f alpha:1.0f];
   _label.textAlignment = NSTextAlignmentCenter;
   [_status addSubview:_label];
+  
+  _message = @[@"Connecting ...",@"Authorizing ...",@"Failed ..."];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -89,6 +101,11 @@
   [self showCloud:self.cloud4 duration:0.5f delay:1.1f options:0];
   
   [self moveAndShowLoginButton];
+  
+  [self animateCloud:self.cloud1];
+  [self animateCloud:self.cloud2];
+  [self animateCloud:self.cloud3];
+  [self animateCloud:self.cloud4];
 }
 
 #pragma mark - IBAction
@@ -105,7 +122,9 @@
                        bounds.size.width += 80;
                        bounds;
                      });
-                   } completion:nil];
+                   } completion:^(BOOL finished){
+                     [self showMessage:0];
+                   }];
   
   [UIView animateWithDuration:0.33f
                         delay:0.0f
@@ -186,6 +205,26 @@
   } completion:nil];
 }
 
+- (void)animateCloud:(UIView*)cloud{
+  CGFloat cloudSpeed = 60.0f / self.view.bounds.size.width;
+  CGFloat duration = (self.view.bounds.size.width - cloud.frame.origin.x) * cloudSpeed;
+  [UIView animateWithDuration:duration delay:0.0f options:UIViewAnimationOptionCurveLinear
+                   animations:^{
+                     cloud.frame = ({
+                       CGRect frame = cloud.frame;
+                       frame.origin.x = self.view.bounds.size.width;
+                       frame;
+                     });
+                   } completion:^(BOOL finished) {
+                     cloud.frame = ({
+                       CGRect frame = cloud.frame;
+                       frame.origin.x = -self.view.bounds.size.width;
+                       frame;
+                     });
+                     [self animateCloud:cloud];
+                   }];
+}
+
 - (void)moveAndHideLoginButton {
   self.loginButton.center = ({
     CGPoint center = self.loginButton.center;
@@ -211,5 +250,75 @@
       center;
     });
   } completion:nil];
+}
+
+- (void)showMessage:(NSUInteger)index{
+  _label.text = _message[index];
+  [UIView transitionWithView:_status
+                    duration:0.33f
+                     options:UIViewAnimationOptionCurveEaseOut|UIViewAnimationOptionTransitionCurlDown
+                  animations:^{
+                    _status.hidden = NO;
+                  } completion:^(BOOL finished){
+                    //Delay 2 second before change message
+                    delay(2.0f, ^{
+                      if (index < (_message.count - 1)) {
+                        [self removeMessage:index];
+                      }else{
+                        [self resetForm];
+                      }
+                    });
+                  }];
+}
+
+- (void)removeMessage:(NSUInteger)index{
+  [UIView animateWithDuration:0.33f
+                        delay:0.0f
+                      options:0
+                   animations:^{
+                     _status.center = ({
+                       CGPoint center = _status.center;
+                       center.x += self.view.bounds.size.width;
+                       center;
+                     });
+                   } completion:^(BOOL finished) {
+                     _status.hidden = YES;
+                     _status.center = _statusPosition;
+                     [self showMessage:(index+1)];
+                   }];
+}
+
+- (void)resetForm{
+  //Hide status
+  [UIView transitionWithView:_status
+                    duration:0.2f
+                     options:UIViewAnimationOptionTransitionCurlUp
+                  animations:^{
+                    _status.hidden = YES;
+                  } completion:nil];
+  
+  [UIView animateWithDuration:0.5f
+                        delay:0.0f
+                      options:0
+                   animations:^{
+                     _spinner.center = CGPointMake(-20.0f, 16.0f);
+                     _spinner.alpha = 0.0f;
+                     self.loginButton.backgroundColor = [UIColor colorWithRed:160.0f/255
+                                                                        green:214.0f/255
+                                                                         blue:90.0f/255
+                                                                        alpha:1.0f];
+                     self.loginButton.bounds = ({
+                       CGRect bounds = self.loginButton.bounds;
+                       bounds.size.width -= 80;
+                       bounds;
+                     });
+                     self.loginButton.center = ({
+                       CGPoint center = self.loginButton.center;
+                       center.y -= 60.0f;
+                       center;
+                     });
+                     
+                   }
+                   completion:nil];
 }
 @end
