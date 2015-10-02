@@ -42,7 +42,7 @@
   _spinner.frame = CGRectMake(-20.0f, 6.0f, 20.0f, 20.0f);
   [_spinner startAnimating];
   _spinner.alpha = 0.0f;
-  [self.view addSubview:_spinner];
+  [self.loginButton addSubview:_spinner];
   
   _status = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"banner"]];
   _status.hidden = YES;
@@ -65,11 +65,69 @@
   [self moveOutFormElement:self.username];
   [self moveOutFormElement:self.password];
   
+  //Hide clouds
   [self fadeCloud:self.cloud1];
   [self fadeCloud:self.cloud2];
   [self fadeCloud:self.cloud3];
   [self fadeCloud:self.cloud4];
+  
+  [self moveAndHideLoginButton];
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
+  //Move form element back with animation
+  [self moveBackFormElement:self.heading duration:0.5f delay:0.0f option:0 useSpringAnimation:NO];
+  [self moveBackFormElement:self.username duration:0.5f delay:0.3f option:0 useSpringAnimation:YES];
+  [self moveBackFormElement:self.password duration:0.5f delay:0.4f option:0 useSpringAnimation:YES];
+  
+  //Show cloud
+  [self showCloud:self.cloud1 duration:0.5f delay:0.5f options:0];
+  [self showCloud:self.cloud2 duration:0.5f delay:0.7f options:0];
+  [self showCloud:self.cloud3 duration:0.5f delay:0.9f options:0];
+  [self showCloud:self.cloud4 duration:0.5f delay:1.1f options:0];
+  
+  [self moveAndShowLoginButton];
+}
+
+#pragma mark - IBAction
+
+- (IBAction)login:(id)loginButton {
+  [UIView animateWithDuration:1.5f
+                        delay:0.0f
+       usingSpringWithDamping:0.2f
+        initialSpringVelocity:0.0f
+                      options:0
+                   animations:^{
+                     self.loginButton.bounds = ({
+                       CGRect bounds = self.loginButton.bounds;
+                       bounds.size.width += 80;
+                       bounds;
+                     });
+                   } completion:nil];
+  
+  [UIView animateWithDuration:0.33f
+                        delay:0.0f
+       usingSpringWithDamping:0.7f
+        initialSpringVelocity:0.0f
+                      options:0
+                   animations:^{
+                     self.loginButton.center = ({
+                       CGPoint center = self.loginButton.center;
+                       center.y += 60.0f;
+                       center;
+                     });
+                     self.loginButton.backgroundColor = [UIColor colorWithRed:0.85f
+                                                                        green:0.83f
+                                                                         blue:0.45f
+                                                                        alpha:1.0f];
+                     _spinner.center = CGPointMake(40.0f, self.loginButton.frame.size.height/2);
+                     _spinner.alpha = 1.0f;
+                   } completion:nil];
+}
+
+#pragma mark - Animation
 
 - (void)moveOutFormElement:(UIView*)element{
   element.center = ({
@@ -79,53 +137,79 @@
   });
 }
 
+- (void)moveBackFormElement:(UIView*)element
+                   duration:(NSTimeInterval)duration
+                      delay:(NSTimeInterval)delay
+                     option:(UIViewAnimationOptions)options
+         useSpringAnimation:(BOOL)animation{
+  if (animation) {
+    [UIView animateWithDuration:duration
+                          delay:delay
+         usingSpringWithDamping:0.6f
+          initialSpringVelocity:0.0f
+                        options:options
+                     animations:^{
+                       element.center = ({
+                         CGPoint center = element.center;
+                         center.x += self.view.bounds.size.width;
+                         center;
+                       });
+    } completion:nil];
+  }else{
+    [UIView animateWithDuration:duration
+                          delay:delay
+                        options:options
+                     animations:^{
+                       element.center = ({
+                         CGPoint center = element.center;
+                         center.x += self.view.bounds.size.width;
+                         center;
+                       });
+                     } completion:nil];
+  }
+  
+}
+
 - (void)fadeCloud:(UIView*)cloud{
   cloud.alpha = 0.0f;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  
-  //Move form element back with animation
-  [self moveBackFormElement:self.heading duration:0.5f delay:0.0f option:0];
-  [self moveBackFormElement:self.username duration:0.5f delay:0.3f option:0];
-  [self moveBackFormElement:self.password duration:0.5f delay:0.4f option:0];
-  
-  [self displayCloud:self.cloud1 duration:0.5f delay:0.5f options:0];
-  [self displayCloud:self.cloud2 duration:0.5f delay:0.7f options:0];
-  [self displayCloud:self.cloud3 duration:0.5f delay:0.9f options:0];
-  [self displayCloud:self.cloud4 duration:0.5f delay:1.1f options:0];
+- (void)showCloud:(UIView*)cloud
+         duration:(NSTimeInterval)duration
+            delay:(NSTimeInterval)delay
+          options:(UIViewAnimationOptions)options {
+  [UIView animateWithDuration:duration
+                        delay:delay
+                      options:options
+                   animations:^{
+    cloud.alpha = 1.0f;
+  } completion:nil];
 }
 
-- (void)moveBackFormElement:(UIView*)element
-                   duration:(NSTimeInterval)duration
-                      delay:(NSTimeInterval)delay
-                     option:(UIViewAnimationOptions)options{
-  [UIView animateWithDuration:duration delay:delay options:options animations:^{
-    element.center = ({
-      CGPoint center = element.center;
-      center.x += self.view.bounds.size.width;
+- (void)moveAndHideLoginButton {
+  self.loginButton.center = ({
+    CGPoint center = self.loginButton.center;
+    center.y += 30;
+    center;
+  });
+  self.loginButton.alpha = 0.0f;
+}
+
+- (void)moveAndShowLoginButton {
+  //Less damping -> bouncier animation
+  //Move velocity -> bouncier animation
+  [UIView animateWithDuration:0.5f
+                        delay:0.5f
+       usingSpringWithDamping:0.5f
+        initialSpringVelocity:0.0f
+                      options:0
+                   animations:^{
+    self.loginButton.alpha = 1.0f;
+    self.loginButton.center = ({
+      CGPoint center = self.loginButton.center;
+      center.y -= 30;
       center;
     });
-  } completion:^(BOOL finished) {
-    
-  }];
+  } completion:nil];
 }
-
-- (void)displayCloud:(UIView*)cloud
-            duration:(NSTimeInterval)duration
-               delay:(NSTimeInterval)delay
-             options:(UIViewAnimationOptions)options {
-  [UIView animateWithDuration:duration delay:delay options:options animations:^{
-    cloud.alpha = 1.0f;
-  } completion:^(BOOL finished) {
-    
-  }];
-}
-
-#pragma mark - Other methods
-
-- (IBAction)login:(id)loginButton {
-}
-
 @end
