@@ -236,7 +236,7 @@ void delay(double second, dispatch_block_t completion){
 
 - (void)moveAndShowLoginButton {
   //Less damping -> bouncier animation
-  //Move velocity -> bouncier animation
+  //More velocity -> bouncier animation
   [UIView animateWithDuration:0.5f
                         delay:0.5f
        usingSpringWithDamping:0.5f
