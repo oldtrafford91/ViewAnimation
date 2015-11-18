@@ -14,7 +14,6 @@
 		E1528D8F1BBCD7FA00DC7557 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1528D8E1BBCD7FA00DC7557 /* Images.xcassets */; };
 		E1528D921BBCD7FA00DC7557 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1528D901BBCD7FA00DC7557 /* LaunchScreen.xib */; };
 		E1528D9E1BBCD7FB00DC7557 /* ViewAnimationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E1528D9D1BBCD7FB00DC7557 /* ViewAnimationTests.m */; };
-		E1E05C191BBF45EE00C31713 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = E1E05C181BBF45EE00C31713 /* README.md */; };
 		E1E05C1E1BBF492200C31713 /* screenshot in Resources */ = {isa = PBXBuildFile; fileRef = E1E05C1D1BBF492200C31713 /* screenshot */; };
 /* End PBXBuildFile section */
 
@@ -228,7 +227,6 @@
 			files = (
 				E1528D8A1BBCD7FA00DC7557 /* ViewController.m in Sources */,
 				E1528D871BBCD7FA00DC7557 /* AppDelegate.m in Sources */,
-				E1E05C191BBF45EE00C31713 /* README.md in Sources */,
 				E1528D841BBCD7FA00DC7557 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,10 +373,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -394,10 +389,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ViewAnimationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
