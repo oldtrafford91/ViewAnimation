@@ -14,7 +14,6 @@
 		E1528D8F1BBCD7FA00DC7557 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1528D8E1BBCD7FA00DC7557 /* Images.xcassets */; };
 		E1528D921BBCD7FA00DC7557 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1528D901BBCD7FA00DC7557 /* LaunchScreen.xib */; };
 		E1528D9E1BBCD7FB00DC7557 /* ViewAnimationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E1528D9D1BBCD7FB00DC7557 /* ViewAnimationTests.m */; };
-		E1E05C1E1BBF492200C31713 /* screenshot in Resources */ = {isa = PBXBuildFile; fileRef = E1E05C1D1BBF492200C31713 /* screenshot */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -204,7 +203,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1E05C1E1BBF492200C31713 /* screenshot in Resources */,
 				E1528D8D1BBCD7FA00DC7557 /* Main.storyboard in Resources */,
 				E1528D921BBCD7FA00DC7557 /* LaunchScreen.xib in Resources */,
 				E1528D8F1BBCD7FA00DC7557 /* Images.xcassets in Resources */,
